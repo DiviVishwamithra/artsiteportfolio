@@ -1,38 +1,302 @@
-.App {
+* {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+.modalDialog {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background: rgba(0, 0, 0, 0.8);
+  z-index: 99999;
+  transition: opacity 100ms ease-in;
+}
+
+.modalDialog>div {
+  max-width: 800px;
+  width: 90%;
+  position: relative;
+  margin: 5% auto;
+  padding: 20px;
+  border-radius: 12px; /* Adjust border-radius here */
+  background: #fff;
+}
+
+.close {
+  font-family: Arial, Helvetica, sans-serif;
+  background: #94db16;
+  color: #fff;
+  line-height: 25px;
+  position: absolute;
+  right: -12px;
+  text-align: center;
+  top: -10px;
+  width: 40px;
+  height: 40px;
+  text-decoration: none;
+  font-weight: bold;
+  border-radius: 50%;
+  box-shadow: 1px 1px 3px #000;
+  padding-top: 5px;
+  border: none;
+}
+
+.close:hover {
+  background: #94db16;
+  cursor: pointer;
+}
+
+h2 {
+  color: #000;
   text-align: center;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+.nda_content {
+  color: #000;
+  margin-top: 2rem;
+  max-height: 250px;
+  overflow: auto;
+  border: 1px solid black;
+  padding: 10px;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+.user_details {
+  margin-top: 2rem;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+.row {
   display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+  flex-wrap: wrap;
+  justify-content: space-around;
 }
 
-.App-link {
-  color: #61dafb;
+.col-lg-6 {
+  flex: 0 0 45%;
+  max-width: 45%;
+  margin-bottom: 1rem;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
+label {
+  color: black;
+  display: block;
+  margin-bottom: 0.5rem;
+}
+
+input {
+  width: 100%;
+  padding: 0.5rem;
+  margin-bottom: 0.5rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.validation-message {
+  text-align: center;
+  color: red;
+  height: 1.5rem;
+  margin: 5px 0;
+}
+
+.text-center {
+  text-align: center;
+}
+
+.portfolio-btn {
+  background-color: #94db16;
+  color: black;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.portfolio-btn:disabled {
+  background-color: #ccc;
+}
+
+.portfolio-btn:not(:disabled):hover {
+  background-color: #82c014;
+}
+
+
+.image-gallery {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-gap: 10px;
+}
+
+.gallery-image {
+  width: 100%;
+  max-height: 100%;
+}
+
+.Headsection {
+  padding-top: 5rem;
+}
+
+h1 {
+  text-transform: uppercase;
+  font-weight: 500;
+  font-size: 5rem;
+  line-height: 1.2;
+  font-family: DrukWide-Medium-Trial;
+}
+
+@media only screen and (min-width: 998px) and (max-width: 1276px) {
+ 
+  h1 {
+   font-size: 7vw;
+ }
+
+ .p {
+   font-size: 0.8rem;
+ }
+
+ .nda_content {
+   max-height: 12.5rem !important;
+   margin-top: 1rem;
+ }
+
+ .user_details {
+   margin-top: 1rem;
+ }
+
+ .col-lg-6 {
+   margin-bottom: 0rem;
+ }
+
+ .modalDialog>div {
+   max-width: 800px;
+   width: 90%;
+   height: 82%;
+   position: relative;
+   margin: 5% auto;
+   padding: 20px;
+   border-radius: 12px; /* Adjust border-radius here */
+   background: #fff;
+ }
+
+}
+
+@media all and (max-width: 1279px) {
+  h1 {
+   font-size: 7vw;
+ }
+
+ .p {
+   font-size: 0.8rem;
+ }
+
+ .nda_content {
+   max-height: 10.5rem;
+   margin-top: 1rem;
+ }
+
+ .user_details {
+   margin-top: 1rem;
+ }
+
+ .col-lg-6 {
+   margin-bottom: 0rem;
+ }
+
+ .modalDialog>div {
+   max-width: 800px;
+   width: 90%;
+   height: 82%;
+   position: relative;
+   margin: 5% auto;
+   padding: 20px;
+   border-radius: 12px; /* Adjust border-radius here */
+   background: #fff;
+ }
+
+}
+
+@media screen and (max-width: 991px) {
+   h1 {
+    font-size: 7vw;
   }
-  to {
-    transform: rotate(360deg);
+
+  .p {
+    font-size: 0.8rem;
   }
+
+  .nda_content {
+    max-height: 7.5rem;
+    margin-top: 1rem;
+  }
+
+  .user_details {
+    margin-top: 1rem;
+  }
+
+  .col-lg-6 {
+    margin-bottom: 0rem;
+  }
+
+  .modalDialog>div {
+    max-width: 800px;
+    width: 90%;
+    height: 82%;
+    position: relative;
+    margin: 5% auto;
+    padding: 20px;
+    border-radius: 12px; /* Adjust border-radius here */
+    background: #fff;
+  }
+
+}
+
+.p {
+  margin-top: 1rem;
+  padding-right: 1rem;
+  text-align: justify;
+}
+
+.text-center {
+  text-align: center;
+}
+
+.portfolio-btn {
+  /* margin: 10px 0px; */
+  background: none;
+  border: 1px solid #333;
+  padding: 3px 10px;
+  border-radius: 50px;
+  margin-top: 1rem;
+}
+
+.portfolio-btn:hover {
+  background-color: #94db16;
+  color: #fff;
+  cursor: pointer;
+}
+
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+textarea:-webkit-autofill,
+textarea:-webkit-autofill:hover,
+textarea:-webkit-autofill:focus,
+select:-webkit-autofill,
+select:-webkit-autofill:hover,
+select:-webkit-autofill:focus {
+  border: 1px solid #ddd;
+  -webkit-text-fill-color: #000 !important;
+  -webkit-box-shadow: 0 0 0px 1000px #fff inset;
+  transition: background-color 5000s ease-in-out 0s;
+}
+
+input::selection,
+textarea::selection {
+  background: #339af0;
+  color: #fff;
+}
+
+input:-webkit-autofill::first-line {
+  color: #000 !important;
 }
