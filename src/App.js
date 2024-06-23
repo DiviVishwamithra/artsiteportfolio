@@ -1,6 +1,6 @@
 import { useEffect, useState, useRef } from 'react'
 import './App.css';
-import { useNavigate } from 'react-router-dom'
+// import { useNavigate } from 'react-router-dom'
 import Cookies from 'js-cookie'
 import axios from 'axios'
 import { ToastContainer, toast } from 'react-toastify'
@@ -133,7 +133,7 @@ const dataDes = [
 
 const App = () => {
   const [modal, setModal] = useState(false)
-  const navigate = useNavigate()
+  // const navigate = useNavigate()
   const [displayData, setDisplayData] = useState(false)
   const [disabled, setDisabled] = useState(false)
   const [userData, setUserData] = useState({
