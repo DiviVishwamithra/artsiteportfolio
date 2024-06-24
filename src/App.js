@@ -10,123 +10,123 @@ const devapiUrl = `https://devsidecms.ptw.com/art/?rest_route=/wl/v1/`;
 
 const dataDes = [
   {
-    banner_image: '/img/cyberpunk2077.jpg',
+    banner_image: '/portfolio/img/cyberpunk2077.jpg',
     title: '',
   },
   {
-    banner_image: '/img/cyberpunk2077.jpg',
+    banner_image: '/portfolio/img/cyberpunk2077.jpg',
     title: '',
   },
   {
-    banner_image: '/img/sifu.jpg',
+    banner_image: '/portfolio/img/sifu.jpg',
     title: '',
   },
   {
-    banner_image: '/img/dl2.jpg',
+    banner_image: '/portfolio/img/dl2.jpg',
     title: '',
   },
   {
-    banner_image: '/img/godofwar_ragnarok.jpg',
+    banner_image: '/portfolio/img/godofwar_ragnarok.jpg',
     title: '',
   },
   {
-    banner_image: '/img/plague.jpg',
+    banner_image: '/portfolio/img/plague.jpg',
     title: '',
   },
   {
-    banner_image: '/img/sifu.jpg',
+    banner_image: '/portfolio/img/sifu.jpg',
     title: '',
   },
   {
-    banner_image: '/img/deadisland2.jpg',
+    banner_image: '/portfolio/img/deadisland2.jpg',
     title: '',
   },
   {
-    banner_image: '/img/godofwar_ragnarok.jpg',
+    banner_image: '/portfolio/img/godofwar_ragnarok.jpg',
     title: '',
   },
   {
-    banner_image: '/img/plague.jpg',
+    banner_image: '/portfolio/img/plague.jpg',
     title: '',
   },
   {
-    banner_image: '/img/plague.jpg',
+    banner_image: '/portfolio/img/plague.jpg',
     title: '',
   },
   {
-    banner_image: '/img/sifu.jpg',
+    banner_image: '/portfolio/img/sifu.jpg',
     title: '',
   },
   {
-    banner_image: '/img/deadisland2.jpg',
+    banner_image: '/portfolio/img/deadisland2.jpg',
     title: '',
   },
   {
-    banner_image: '/img/godofwar_ragnarok.jpg',
+    banner_image: '/portfolio/img/godofwar_ragnarok.jpg',
     title: '',
   },
   {
-    banner_image: '/img/plague.jpg',
+    banner_image: '/portfolio/img/plague.jpg',
     title: '',
   },
   {
-    banner_image: '/img/cyberpunk2077.jpg',
+    banner_image: '/portfolio/img/cyberpunk2077.jpg',
     title: '',
   },
   {
-    banner_image: '/img/cyberpunk2077.jpg',
+    banner_image: '/portfolio/img/cyberpunk2077.jpg',
     title: '',
   },
   {
-    banner_image: '/img/sifu.jpg',
+    banner_image: '/portfolio/img/sifu.jpg',
     title: '',
   },
   {
-    banner_image: '/img/dl2.jpg',
+    banner_image: '/portfolio/img/dl2.jpg',
     title: '',
   },
   {
-    banner_image: '/img/godofwar_ragnarok.jpg',
+    banner_image: '/portfolio/img/godofwar_ragnarok.jpg',
     title: '',
   },
   {
-    banner_image: '/img/plague.jpg',
+    banner_image: '/portfolio/img/plague.jpg',
     title: '',
   },
   {
-    banner_image: '/img/sifu.jpg',
+    banner_image: '/portfolio/img/sifu.jpg',
     title: '',
   },
   {
-    banner_image: '/img/deadisland2.jpg',
+    banner_image: '/portfolio/img/deadisland2.jpg',
     title: '',
   },
   {
-    banner_image: '/img/godofwar_ragnarok.jpg',
+    banner_image: '/portfolio/img/godofwar_ragnarok.jpg',
     title: '',
   },
   {
-    banner_image: '/img/plague.jpg',
+    banner_image: '/portfolio/img/plague.jpg',
     title: '',
   },
   {
-    banner_image: '/img/plague.jpg',
+    banner_image: '/portfolio/img/plague.jpg',
     title: '',
   },
   {
-    banner_image: '/img/sifu.jpg',
+    banner_image: '/portfolio/img/sifu.jpg',
     title: '',
   },
   {
-    banner_image: '/img/deadisland2.jpg',
+    banner_image: '/portfolio/img/deadisland2.jpg',
     title: '',
   },
   {
-    banner_image: '/img/godofwar_ragnarok.jpg',
+    banner_image: '/portfolio/img/godofwar_ragnarok.jpg',
     title: '',
   },
   {
-    banner_image: '/img/plague.jpg',
+    banner_image: '/portfolio/img/plague.jpg',
     title: '',
   },
 ]

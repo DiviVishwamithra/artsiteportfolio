@@ -40,38 +40,38 @@ p {
 
 @font-face {
   font-family: IBMPlexMono-Regular;
-  src: url('/fonts/IBMPlexMono-Regular.ttf');
+  src: url('/portfolio/fonts/IBMPlexMono-Regular.ttf');
 }
 
 @font-face {
   font-family: IBMPlexMono-SemiBold;
-  src: url('/fonts/IBMPlexMono-SemiBold.ttf');
+  src: url('/portfolio/fonts/IBMPlexMono-SemiBold.ttf');
 }
 
 /* @font-face {
     font-family: DrukWide-Bold-Trial;
-    src: url("/fonts/DrukWide-Bold-Trial.otf");
+    src: url("/portfolio/fonts/DrukWide-Bold-Trial.otf");
     font-weight: 100;
 } */
 @font-face {
   font-family: DrukWide-Medium-Trial;
-  /* src: url('/fonts/DrukWide-Medium-Trial.otf'); */
-  src: url("/fonts/DrukWide-Medium-Trial.eot");
-  src: url("/fonts/DrukWide-Medium-Trial.eot?#iefix")format("embedded-opentype"),
-    url("/fonts/DrukWide-Medium-Trial.woff")format("woff"),
-    url("/fonts/DrukWide-Medium-Trial.woff2")format("woff2"),
-    url("/fonts/DrukWide-Medium-Trial.ttf")format("truetype");
+  /* src: url('/portfolio/fonts/DrukWide-Medium-Trial.otf'); */
+  src: url("/portfolio/fonts/DrukWide-Medium-Trial.eot");
+  src: url("/portfolio/fonts/DrukWide-Medium-Trial.eot?#iefix")format("embedded-opentype"),
+    url("/portfolio/fonts/DrukWide-Medium-Trial.woff")format("woff"),
+    url("/portfolio/fonts/DrukWide-Medium-Trial.woff2")format("woff2"),
+    url("/portfolio/fonts/DrukWide-Medium-Trial.ttf")format("truetype");
   font-weight: 100;
 }
 
 @font-face {
   font-family: Helvetica-Neue-Regular;
-  src: url('/fonts/Helvetica-Neue-Regular.ttf');
+  src: url('/portfolio/fonts/Helvetica-Neue-Regular.ttf');
 }
 
 @font-face {
   font-family: Roboto-Regular;
-  src: url('/fonts/Roboto-Regular.ttf');
+  src: url('/portfolio/fonts/Roboto-Regular.ttf');
 }
 
 :root {
