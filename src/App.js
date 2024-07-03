@@ -5,6 +5,11 @@ import Cookies from 'js-cookie'
 import axios from 'axios'
 import { ToastContainer, toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
+import { Swiper, SwiperSlide } from 'swiper/react';
+
+import 'swiper/css';
+import 'swiper/css/navigation';
+import { Navigation } from 'swiper/modules';
 
 const devapiUrl = `https://devsidecms.ptw.com/art/?rest_route=/wl/v1/`;
 
@@ -131,11 +136,21 @@ const dataDes = [
   },
 ]
 
+const imageFormats = ['jpeg', 'png', 'svg', 'gif', 'webp', 'heif']
+
+const videoFormats = ['mp4', 'mov', 'wmv', 'avi', 'webm', 'avchd']
+
+const documentFormats = ['pdf', 'doc', 'docx', 'xls', 'xlsx', 'msword', 'vnd.ms-excel', 'vnd.openxmlformats-officedocument.wordprocessingml.document', "application/vnd.openxmlformats-officedocument.wordprocessingml.document"]
+
+
 const App = () => {
   const [modal, setModal] = useState(false)
   // const navigate = useNavigate()
   const [displayData, setDisplayData] = useState(false)
   const [disabled, setDisabled] = useState(false)
+  const [previewModal, setPreviewModal] = useState(false)
+  const [confidentialData, setConfidentialData] = useState([])
+  const [activeIndex, setActiveIndex] = useState(0)
   const [userData, setUserData] = useState({
     name: '',
     email: '',
@@ -148,11 +163,31 @@ const App = () => {
   const toastRef = useRef(null)
 
   useEffect(() => {
+    const handleContextMenu = (e) => {
+      e.preventDefault();
+    };
+
+    document.addEventListener('contextmenu', handleContextMenu);
+
+    return () => {
+      document.removeEventListener('contextmenu', handleContextMenu);
+    };
+  }, []);
+
+  const getFileTypes = (type) => {
+    let t = type.split('/')
+    let tp = t[t.length - 1]
+    // console.log(tp)
+    return tp
+  }
+
+  useEffect(() => {
     document.title = 'PTW ART - Confidential Portfolio'
     let isSubmitted = Number(localStorage.getItem('is_signed_ptw_nda'))
     let isSubmittedCookie = Number(Cookies.get('is_signed_ptw_nda'))
     if (isSubmitted === 1 || isSubmittedCookie === 1) {
       setDisplayData(true)
+      fetchDataFromAPI()
     } else {
       performingModalOps(true)
       setDisplayData(false)
@@ -263,6 +298,7 @@ const App = () => {
             setDisabled(false)
             performingModalOps(false)
             setDisplayData(true)
+            fetchDataFromAPI()
           } else {
             setDisabled(false)
             throwNotification()
@@ -281,6 +317,35 @@ const App = () => {
     }
   }
 
+  const callDisableAPI = () => {
+    var iframes = document.getElementsByTagName('iframe');
+    for (var i = 0; i < iframes.length; i++) {
+      iframes[i].contentWindow.document.addEventListener('contextmenu', function (e) {
+        e.preventDefault();
+      });
+    }
+  }
+
+  const fetchDataFromAPI = () => {
+    axios.post(`${devapiUrl}portfolio`)
+      .then(res => {
+        // console.log(res)
+        setConfidentialData(res.data.data)
+        callDisableAPI()
+      })
+      .catch(err => {
+        console.log(err)
+      })
+  }
+
+  const showPreviewModal = (index) => {
+    console.log(index)
+    setActiveIndex(index)
+    setTimeout(() => {
+    setPreviewModal(!previewModal)
+    }, 1000)
+  }
+
   return (
     <>
       {/* <a href="#openModal-about">Modal</a> */}
@@ -297,14 +362,35 @@ const App = () => {
             </div>
           </div>
           <div className="image-gallery" style={{ marginTop: '5rem' }}>
-            {dataDes.map((data, index) => (
-              <img
-                key={index}
-                src={data.banner_image}
-                alt={data.banner_image}
-                className="gallery-image"
-              />
-            ))}
+          {confidentialData.length > 0 ? confidentialData.map((data, index) => (
+            <>{imageFormats.includes(getFileTypes(data["mime-type"])) || videoFormats.includes(getFileTypes(data["mime-type"])) 
+                || documentFormats.includes(getFileTypes(data["mime-type"])) ? <>
+                  { 
+                    imageFormats.includes(getFileTypes(data["mime-type"])) ?
+                      <div onClick={(e) => showPreviewModal(index - 1)}>
+                        <img
+                          key={index}
+                          src={data.url}
+                          alt={data.title}
+                          className="gallery-image"
+                        />
+                      </div> : videoFormats.includes(getFileTypes(data["mime-type"])) ?
+                        <div onClick={(e) => showPreviewModal(index - 1)}>
+                          <video
+                          key={index}
+                          src={data.url}
+                          alt={data.title}
+                          className="gallery-image"
+                        />
+                      </div> : documentFormats.includes(getFileTypes(data["mime-type"])) ?
+                        <div key={index} onClick={(e) => showPreviewModal(index - 1)}>
+                          <iframe key={index} frameborder="0" src={data.url + '#toolbar=0'} height={300} width={300} />
+                        </div> : ''
+                  }
+                </> : null
+              }</>
+              
+            )) : null}
           </div>
         </div>
       ) : null}
@@ -418,6 +504,48 @@ const App = () => {
         </div>
       ) : null}
       {/* <Footer /> */}
+      <div className={previewModal ? "preview-modal display-block" : "preview-modal display-none"} onClick={(e) => showPreviewModal()}>
+      <section className="preview-modal-main" onClick={event => event.stopPropagation()}>
+      {confidentialData.length > 0 ? <Swiper
+      spaceBetween={50}
+      navigation={true} modules={[Navigation]} className="mySwiper"
+      slidesPerView={1}
+      initialSlide={activeIndex}
+      onSlideChange={(swiper) => console.log('slide change', swiper)}
+      onSwiper={(swiper) => console.log(swiper)}
+    > 
+     {confidentialData.map((data, index) => (
+             <>{imageFormats.includes(getFileTypes(data["mime-type"])) || videoFormats.includes(getFileTypes(data["mime-type"])) 
+              || documentFormats.includes(getFileTypes(data["mime-type"])) ? 
+              <SwiperSlide> {
+                imageFormats.includes(getFileTypes(data["mime-type"])) ?
+                  <>
+                    <img
+                      key={index}
+                      src={data.url}
+                      alt={data.title}
+                      className="gallery-image"
+                    />
+                  </> : videoFormats.includes(getFileTypes(data["mime-type"])) ? <>
+                    <video
+                      key={index}
+                      src={data.url}
+                      alt={data.title}
+                      className="gallery-image"
+                      controls
+                    />
+                  </> : documentFormats.includes(getFileTypes(data["mime-type"])) ?
+                    <div key={index}>
+                      <iframe key={index} width="100%" height={800} frameborder="0" src={data.url + '#toolbar=0'}/>
+                    </div> : ''
+              }
+              </SwiperSlide> : ''
+             }</> 
+            )) }
+    </Swiper> : null}
+        <button onClick={(e) => showPreviewModal()}>close</button>
+      </section>
+    </div>
       <ToastContainer />
     </>
   )
