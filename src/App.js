@@ -161,6 +161,7 @@ const App = () => {
   })
 
   const toastRef = useRef(null)
+  const swiperRef = useRef(null);
 
   useEffect(() => {
     const handleContextMenu = (e) => {
@@ -340,7 +341,10 @@ const App = () => {
 
   const showPreviewModal = (index) => {
     console.log(index)
-    setActiveIndex(index)
+    // setActiveIndex(index)
+    if (swiperRef.current) {
+      swiperRef.current.swiper.slideTo(index);
+    }
     setTimeout(() => {
     setPreviewModal(!previewModal)
     }, 1000)
@@ -367,24 +371,23 @@ const App = () => {
                 || documentFormats.includes(getFileTypes(data["mime-type"])) ? <>
                   { 
                     imageFormats.includes(getFileTypes(data["mime-type"])) ?
-                      <div onClick={(e) => showPreviewModal(index - 1)}>
+                      <div key={index} id={index} onClick={(e) => showPreviewModal(index)}>
                         <img
-                          key={index}
                           src={data.url}
                           alt={data.title}
                           className="gallery-image"
                         />
                       </div> : videoFormats.includes(getFileTypes(data["mime-type"])) ?
-                        <div onClick={(e) => showPreviewModal(index - 1)}>
+                        <div key={index} id={index} onClick={(e) => showPreviewModal(index)}>
                           <video
-                          key={index}
                           src={data.url}
                           alt={data.title}
                           className="gallery-image"
                         />
                       </div> : documentFormats.includes(getFileTypes(data["mime-type"])) ?
-                        <div key={index} onClick={(e) => showPreviewModal(index - 1)}>
-                          <iframe key={index} frameborder="0" src={data.url + '#toolbar=0'} height={300} width={300} />
+                        <div id={index} key={index} onClick={(e) => showPreviewModal(index)} style={{textAlign:'center'}}>
+                          <iframe frameborder="0" src={data.url + '#toolbar=0'} height={300} width={300} />
+                          <button onClick={(e) => showPreviewModal(index)}>View</button>
                         </div> : ''
                   }
                 </> : null
@@ -508,7 +511,10 @@ const App = () => {
       <section className="preview-modal-main" onClick={event => event.stopPropagation()}>
       {confidentialData.length > 0 ? <Swiper
       spaceBetween={50}
-      navigation={true} modules={[Navigation]} className="mySwiper"
+      ref={swiperRef}
+      navigation={true} 
+      modules={[Navigation]} 
+      className="mySwiper"
       slidesPerView={1}
       initialSlide={activeIndex}
       onSlideChange={(swiper) => console.log('slide change', swiper)}
