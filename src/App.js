@@ -140,7 +140,7 @@ const imageFormats = ['jpeg', 'png', 'svg', 'gif', 'webp', 'heif']
 
 const videoFormats = ['mp4', 'mov', 'wmv', 'avi', 'webm', 'avchd']
 
-const documentFormats = ['pdf', 'doc', 'docx', 'xls', 'xlsx', 'msword', 'vnd.ms-excel', 'vnd.openxmlformats-officedocument.wordprocessingml.document', "application/vnd.openxmlformats-officedocument.wordprocessingml.document"]
+const documentFormats = ['pdf']
 
 
 const App = () => {
@@ -306,7 +306,6 @@ const App = () => {
           }
         })
         .catch((err) => {
-          // console.log(err)
           setDisabled(false)
           throwNotification()
         })
@@ -318,21 +317,10 @@ const App = () => {
     }
   }
 
-  const callDisableAPI = () => {
-    var iframes = document.getElementsByTagName('iframe');
-    for (var i = 0; i < iframes.length; i++) {
-      iframes[i].contentWindow.document.addEventListener('contextmenu', function (e) {
-        e.preventDefault();
-      });
-    }
-  }
-
   const fetchDataFromAPI = () => {
     axios.post(`${devapiUrl}portfolio`)
       .then(res => {
-        // console.log(res)
         setConfidentialData(res.data.data)
-        callDisableAPI()
       })
       .catch(err => {
         console.log(err)
@@ -340,19 +328,15 @@ const App = () => {
   }
 
   const showPreviewModal = (index) => {
-    console.log(index)
-    // setActiveIndex(index)
     if (swiperRef.current) {
-      swiperRef.current.swiper.slideTo(index - 1);
-    }
-    setTimeout(() => {
+      swiperRef.current.swiper.slideTo(index);
       setPreviewModal(!previewModal)
-    }, 1000)
+    }
+
   }
 
   return (
     <>
-      {/* <a href="#openModal-about">Modal</a> */}
       {displayData ? (
         <div className="container">
           <div className="Headsection">
@@ -365,7 +349,7 @@ const App = () => {
               </div>
             </div>
           </div>
-          <div className="image-gallery" style={{ marginTop: '5rem' }}>
+          <div className="image-gallery mb-5" style={{ marginTop: '5rem' }}>
             {confidentialData.length > 0 ? confidentialData.map((data, index) => (
               <React.Fragment key={index}>{imageFormats.includes(getFileTypes(data["mime-type"])) || videoFormats.includes(getFileTypes(data["mime-type"]))
                 || documentFormats.includes(getFileTypes(data["mime-type"])) ? <>
@@ -377,6 +361,7 @@ const App = () => {
                         alt={data.title}
                         className="gallery-image pad-15 image"
                       />
+                      <div className="text-title">{data.title ? data.title : 'Image'}</div>
                       <div className="middle">
                         <div className="text" onClick={(e) => showPreviewModal(index)}>Click Here</div>
                       </div>
@@ -387,12 +372,14 @@ const App = () => {
                           alt={data.title}
                           className="gallery-image pad-15 image"
                         />
+                        <div className="text-title">{data.title ? data.title : 'Video'}</div>
                         <div className="middle">
                           <div className="text" onClick={(e) => showPreviewModal(index)}>Click Here</div>
                         </div>
                       </div> : documentFormats.includes(getFileTypes(data["mime-type"])) ?
                         <div key={index} style={{ textAlign: 'center' }} className="container-img">
                           <iframe frameBorder="0" src={data.url + '#toolbar=0'} height={260} width={430} className="pad-15 image" />
+                          <div className="text-title">{data.title ? data.title : 'Document'}</div>
                           <div className="middle">
                             <div className="text" onClick={(e) => showPreviewModal(index)}>Click Here</div>
                           </div>
@@ -537,14 +524,15 @@ const App = () => {
                       <img
                         src={data.url}
                         alt={data.title}
-                        className="gallery-image"
+                        className="gallery-img"
                       />
+                      <div className="text-title">{data.title ? data.title : 'Image'}</div>
                     </React.Fragment> : videoFormats.includes(getFileTypes(data["mime-type"])) ? <React.Fragment key={index}>
                       <video
                         key={index}
                         src={data.url}
                         alt={data.title}
-                        className="gallery-image"
+                        className="gallery-img"
                         controls
                       />
                     </React.Fragment> : documentFormats.includes(getFileTypes(data["mime-type"])) ?
@@ -556,7 +544,7 @@ const App = () => {
               }</React.Fragment>
             ))}
           </Swiper> : null}
-          <button onClick={(e) => showPreviewModal()}>close</button>
+          <button onClick={(e) => showPreviewModal()} className="close-btn">X</button>
         </section>
       </div>
       <ToastContainer />
