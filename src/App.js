@@ -1,4 +1,4 @@
-import { useEffect, useState, useRef } from 'react'
+import React, { useEffect, useState, useRef } from 'react'
 import './App.css';
 // import { useNavigate } from 'react-router-dom'
 import Cookies from 'js-cookie'
@@ -343,10 +343,10 @@ const App = () => {
     console.log(index)
     // setActiveIndex(index)
     if (swiperRef.current) {
-      swiperRef.current.swiper.slideTo(index);
+      swiperRef.current.swiper.slideTo(index - 1);
     }
     setTimeout(() => {
-    setPreviewModal(!previewModal)
+      setPreviewModal(!previewModal)
     }, 1000)
   }
 
@@ -366,33 +366,41 @@ const App = () => {
             </div>
           </div>
           <div className="image-gallery" style={{ marginTop: '5rem' }}>
-          {confidentialData.length > 0 ? confidentialData.map((data, index) => (
-            <>{imageFormats.includes(getFileTypes(data["mime-type"])) || videoFormats.includes(getFileTypes(data["mime-type"])) 
+            {confidentialData.length > 0 ? confidentialData.map((data, index) => (
+              <React.Fragment key={index}>{imageFormats.includes(getFileTypes(data["mime-type"])) || videoFormats.includes(getFileTypes(data["mime-type"]))
                 || documentFormats.includes(getFileTypes(data["mime-type"])) ? <>
-                  { 
-                    imageFormats.includes(getFileTypes(data["mime-type"])) ?
-                      <div key={index} id={index} onClick={(e) => showPreviewModal(index)}>
-                        <img
+                {
+                  imageFormats.includes(getFileTypes(data["mime-type"])) ?
+                    <div key={index} className="container-img">
+                      <img
+                        src={data.url}
+                        alt={data.title}
+                        className="gallery-image pad-15 image"
+                      />
+                      <div className="middle">
+                        <div className="text" onClick={(e) => showPreviewModal(index)}>Click Here</div>
+                      </div>
+                    </div> : videoFormats.includes(getFileTypes(data["mime-type"])) ?
+                      <div key={index} className="container-img">
+                        <video
                           src={data.url}
                           alt={data.title}
-                          className="gallery-image"
+                          className="gallery-image pad-15 image"
                         />
-                      </div> : videoFormats.includes(getFileTypes(data["mime-type"])) ?
-                        <div key={index} id={index} onClick={(e) => showPreviewModal(index)}>
-                          <video
-                          src={data.url}
-                          alt={data.title}
-                          className="gallery-image"
-                        />
+                        <div className="middle">
+                          <div className="text" onClick={(e) => showPreviewModal(index)}>Click Here</div>
+                        </div>
                       </div> : documentFormats.includes(getFileTypes(data["mime-type"])) ?
-                        <div id={index} key={index} onClick={(e) => showPreviewModal(index)} style={{textAlign:'center'}}>
-                          <iframe frameborder="0" src={data.url + '#toolbar=0'} height={300} width={300} />
-                          <button onClick={(e) => showPreviewModal(index)}>View</button>
+                        <div key={index} style={{ textAlign: 'center' }} className="container-img">
+                          <iframe frameBorder="0" src={data.url + '#toolbar=0'} height={260} width={430} className="pad-15 image" />
+                          <div className="middle">
+                            <div className="text" onClick={(e) => showPreviewModal(index)}>Click Here</div>
+                          </div>
                         </div> : ''
-                  }
-                </> : null
-              }</>
-              
+                }
+              </> : null
+              }</React.Fragment>
+
             )) : null}
           </div>
         </div>
@@ -508,50 +516,49 @@ const App = () => {
       ) : null}
       {/* <Footer /> */}
       <div className={previewModal ? "preview-modal display-block" : "preview-modal display-none"} onClick={(e) => showPreviewModal()}>
-      <section className="preview-modal-main" onClick={event => event.stopPropagation()}>
-      {confidentialData.length > 0 ? <Swiper
-      spaceBetween={50}
-      ref={swiperRef}
-      navigation={true} 
-      modules={[Navigation]} 
-      className="mySwiper"
-      slidesPerView={1}
-      initialSlide={activeIndex}
-      onSlideChange={(swiper) => console.log('slide change', swiper)}
-      onSwiper={(swiper) => console.log(swiper)}
-    > 
-     {confidentialData.map((data, index) => (
-             <>{imageFormats.includes(getFileTypes(data["mime-type"])) || videoFormats.includes(getFileTypes(data["mime-type"])) 
-              || documentFormats.includes(getFileTypes(data["mime-type"])) ? 
-              <SwiperSlide> {
-                imageFormats.includes(getFileTypes(data["mime-type"])) ?
-                  <>
-                    <img
-                      key={index}
-                      src={data.url}
-                      alt={data.title}
-                      className="gallery-image"
-                    />
-                  </> : videoFormats.includes(getFileTypes(data["mime-type"])) ? <>
-                    <video
-                      key={index}
-                      src={data.url}
-                      alt={data.title}
-                      className="gallery-image"
-                      controls
-                    />
-                  </> : documentFormats.includes(getFileTypes(data["mime-type"])) ?
-                    <div key={index}>
-                      <iframe key={index} width="100%" height={800} frameborder="0" src={data.url + '#toolbar=0'}/>
-                    </div> : ''
-              }
-              </SwiperSlide> : ''
-             }</> 
-            )) }
-    </Swiper> : null}
-        <button onClick={(e) => showPreviewModal()}>close</button>
-      </section>
-    </div>
+        <section className="preview-modal-main" onClick={event => event.stopPropagation()}>
+          {confidentialData.length > 0 ? <Swiper
+            spaceBetween={50}
+            ref={swiperRef}
+            navigation={true}
+            modules={[Navigation]}
+            className="mySwiper"
+            slidesPerView={1}
+            initialSlide={activeIndex}
+            onSlideChange={(swiper) => console.log('slide change', swiper)}
+            onSwiper={(swiper) => console.log(swiper)}
+          >
+            {confidentialData.map((data, index) => (
+              <React.Fragment key={index}>{imageFormats.includes(getFileTypes(data["mime-type"])) || videoFormats.includes(getFileTypes(data["mime-type"]))
+                || documentFormats.includes(getFileTypes(data["mime-type"])) ?
+                <SwiperSlide> {
+                  imageFormats.includes(getFileTypes(data["mime-type"])) ?
+                    <React.Fragment key={index}>
+                      <img
+                        src={data.url}
+                        alt={data.title}
+                        className="gallery-image"
+                      />
+                    </React.Fragment> : videoFormats.includes(getFileTypes(data["mime-type"])) ? <React.Fragment key={index}>
+                      <video
+                        key={index}
+                        src={data.url}
+                        alt={data.title}
+                        className="gallery-image"
+                        controls
+                      />
+                    </React.Fragment> : documentFormats.includes(getFileTypes(data["mime-type"])) ?
+                      <div key={index}>
+                        <iframe width="100%" height={800} frameBorder="0" src={data.url + '#toolbar=0'} />
+                      </div> : ''
+                }
+                </SwiperSlide> : ''
+              }</React.Fragment>
+            ))}
+          </Swiper> : null}
+          <button onClick={(e) => showPreviewModal()}>close</button>
+        </section>
+      </div>
       <ToastContainer />
     </>
   )
