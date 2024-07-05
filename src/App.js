@@ -10,131 +10,9 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/css';
 import 'swiper/css/navigation';
 import { Navigation } from 'swiper/modules';
+// import { debounce } from 'lodash';
 
 const devapiUrl = `https://devsidecms.ptw.com/art/?rest_route=/wl/v1/`;
-
-const dataDes = [
-  {
-    banner_image: '/portfolio/img/cyberpunk2077.jpg',
-    title: '',
-  },
-  {
-    banner_image: '/portfolio/img/cyberpunk2077.jpg',
-    title: '',
-  },
-  {
-    banner_image: '/portfolio/img/sifu.jpg',
-    title: '',
-  },
-  {
-    banner_image: '/portfolio/img/dl2.jpg',
-    title: '',
-  },
-  {
-    banner_image: '/portfolio/img/godofwar_ragnarok.jpg',
-    title: '',
-  },
-  {
-    banner_image: '/portfolio/img/plague.jpg',
-    title: '',
-  },
-  {
-    banner_image: '/portfolio/img/sifu.jpg',
-    title: '',
-  },
-  {
-    banner_image: '/portfolio/img/deadisland2.jpg',
-    title: '',
-  },
-  {
-    banner_image: '/portfolio/img/godofwar_ragnarok.jpg',
-    title: '',
-  },
-  {
-    banner_image: '/portfolio/img/plague.jpg',
-    title: '',
-  },
-  {
-    banner_image: '/portfolio/img/plague.jpg',
-    title: '',
-  },
-  {
-    banner_image: '/portfolio/img/sifu.jpg',
-    title: '',
-  },
-  {
-    banner_image: '/portfolio/img/deadisland2.jpg',
-    title: '',
-  },
-  {
-    banner_image: '/portfolio/img/godofwar_ragnarok.jpg',
-    title: '',
-  },
-  {
-    banner_image: '/portfolio/img/plague.jpg',
-    title: '',
-  },
-  {
-    banner_image: '/portfolio/img/cyberpunk2077.jpg',
-    title: '',
-  },
-  {
-    banner_image: '/portfolio/img/cyberpunk2077.jpg',
-    title: '',
-  },
-  {
-    banner_image: '/portfolio/img/sifu.jpg',
-    title: '',
-  },
-  {
-    banner_image: '/portfolio/img/dl2.jpg',
-    title: '',
-  },
-  {
-    banner_image: '/portfolio/img/godofwar_ragnarok.jpg',
-    title: '',
-  },
-  {
-    banner_image: '/portfolio/img/plague.jpg',
-    title: '',
-  },
-  {
-    banner_image: '/portfolio/img/sifu.jpg',
-    title: '',
-  },
-  {
-    banner_image: '/portfolio/img/deadisland2.jpg',
-    title: '',
-  },
-  {
-    banner_image: '/portfolio/img/godofwar_ragnarok.jpg',
-    title: '',
-  },
-  {
-    banner_image: '/portfolio/img/plague.jpg',
-    title: '',
-  },
-  {
-    banner_image: '/portfolio/img/plague.jpg',
-    title: '',
-  },
-  {
-    banner_image: '/portfolio/img/sifu.jpg',
-    title: '',
-  },
-  {
-    banner_image: '/portfolio/img/deadisland2.jpg',
-    title: '',
-  },
-  {
-    banner_image: '/portfolio/img/godofwar_ragnarok.jpg',
-    title: '',
-  },
-  {
-    banner_image: '/portfolio/img/plague.jpg',
-    title: '',
-  },
-]
 
 const imageFormats = ['jpeg', 'png', 'svg', 'gif', 'webp', 'heif']
 
@@ -150,7 +28,7 @@ const App = () => {
   const [disabled, setDisabled] = useState(false)
   const [previewModal, setPreviewModal] = useState(false)
   const [confidentialData, setConfidentialData] = useState([])
-  const [activeIndex, setActiveIndex] = useState(0)
+  // const [activeIndex, setActiveIndex] = useState(0)
   const [userData, setUserData] = useState({
     name: '',
     email: '',
@@ -175,12 +53,14 @@ const App = () => {
   //   };
   // }, []);
 
+
   const getFileTypes = (type) => {
     let t = type.split('/')
     let tp = t[t.length - 1]
     // console.log(tp)
     return tp
   }
+  
 
   useEffect(() => {
     document.title = 'PTW ART - Confidential Portfolio'
@@ -195,17 +75,17 @@ const App = () => {
     }
   }, [])
 
-  useEffect(() => {
-    const handleKeyUp = (event) => {
-      if (event.key === 'Enter') {
-        callApiForSubbmittingData()
-      }
-    }
-    window.addEventListener('keyup', handleKeyUp)
-    return () => {
-      window.removeEventListener('keyup', handleKeyUp)
-    }
-  }, [])
+  // useEffect(() => {
+  //   const handleKeyUp = (event) => {
+  //     if (event.key === 'Enter') {
+  //       callApiForSubbmittingData()
+  //     }
+  //   }
+  //   window.addEventListener('keyup', handleKeyUp)
+  //   return () => {
+  //     window.removeEventListener('keyup', handleKeyUp)
+  //   }
+  // }, [])
 
   const performingModalOps = (bool) => {
     setModal(bool)
@@ -330,7 +210,15 @@ const App = () => {
   const showPreviewModal = (index) => {
     if (swiperRef.current) {
       swiperRef.current.swiper.slideTo(index);
+
       setPreviewModal(!previewModal)
+      // setTimeout(() => {
+      //   if(previewModal === true) {
+      //     document.body.style.overflow = 'hidden !important'
+      //   } else {
+      //     document.body.style.overflow = ''
+      //   }
+      // }, 500)
     }
 
   }
@@ -504,16 +392,17 @@ const App = () => {
       {/* <Footer /> */}
       <div className={previewModal ? "preview-modal display-block" : "preview-modal display-none"} onClick={(e) => showPreviewModal()}>
         <section className="preview-modal-main" onClick={event => event.stopPropagation()}>
-          {confidentialData.length > 0 ? <Swiper
+          {confidentialData.length > 0 ? 
+          <Swiper
             spaceBetween={50}
             ref={swiperRef}
             navigation={true}
             modules={[Navigation]}
             className="mySwiper"
             slidesPerView={1}
-            initialSlide={activeIndex}
-            onSlideChange={(swiper) => console.log('slide change', swiper)}
-            onSwiper={(swiper) => console.log(swiper)}
+            // initialSlide={activeIndex}
+            // onSlideChange={(swiper) => console.log('slide change', swiper)}
+            // onSwiper={(swiper) => console.log(swiper)}
           >
             {confidentialData.map((data, index) => (
               <React.Fragment key={index}>{imageFormats.includes(getFileTypes(data["mime-type"])) || videoFormats.includes(getFileTypes(data["mime-type"]))
@@ -526,7 +415,7 @@ const App = () => {
                         alt={data.title}
                         className="gallery-img"
                       />
-                      <div className="text-title">{data.title ? data.title : 'Image'}</div>
+                      <div className="caption">{data.title ? data.title : 'Image'}</div>
                     </React.Fragment> : videoFormats.includes(getFileTypes(data["mime-type"])) ? <React.Fragment key={index}>
                       <video
                         key={index}
@@ -535,9 +424,11 @@ const App = () => {
                         className="gallery-img"
                         controls
                       />
+                      <div className="caption">{data.title ? data.title : 'Image'}</div>
                     </React.Fragment> : documentFormats.includes(getFileTypes(data["mime-type"])) ?
                       <div key={index}>
                         <iframe width="100%" height={800} frameBorder="0" src={data.url + '#toolbar=0'} />
+                        <div className="caption">{data.title ? data.title : 'Image'}</div>
                       </div> : ''
                 }
                 </SwiperSlide> : ''
