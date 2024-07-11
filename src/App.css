@@ -152,6 +152,14 @@ input {
   grid-gap: 30px 15px;
 }
 
+.image-gallery::after {
+  content: "";
+  display: block;
+  grid-column: 1 / -1;
+  border-bottom: 2px solid white;
+  margin: 15px 0;
+}
+
 .gallery-image {
   width: 100%;
   max-height: 100%;
@@ -307,11 +315,39 @@ h1 {
   padding: 3px 10px;
   border-radius: 50px;
   margin-top: 1rem;
+  padding: 15px 50px;
+}
+
+.portfolio-btn-disabled {
+  /* margin: 10px 0px; */
+  background: none;
+  border: 1px solid #333;
+  padding: 3px 10px;
+  border-radius: 50px;
+  margin-top: 1rem;
+  padding: 15px 50px;
 }
 
 .portfolio-btn:hover {
   background-color: #94db16;
   color: #fff;
+  cursor: pointer;
+}
+
+.portfolio-btn-disabled:hover {
+  background-color: gray;
+  color: #fff;
+  cursor: pointer;
+}
+
+.next-button {
+  /* margin: 10px 0px; */
+  background: #94db16;
+  border: 1px solid #333;
+  padding: 3px 10px;
+  border-radius: 50px;
+  margin-top: 1rem;
+  padding: 15px 50px;
   cursor: pointer;
 }
 

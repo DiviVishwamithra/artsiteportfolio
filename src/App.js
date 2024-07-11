@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useRef } from 'react'
 import './App.css';
-// import { useNavigate } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import Cookies from 'js-cookie'
 import axios from 'axios'
 import { ToastContainer, toast } from 'react-toastify'
@@ -23,11 +23,12 @@ const documentFormats = ['pdf']
 
 const App = () => {
   const [modal, setModal] = useState(false)
-  // const navigate = useNavigate()
+  const navigate = useNavigate()
   const [displayData, setDisplayData] = useState(false)
   const [disabled, setDisabled] = useState(false)
   const [previewModal, setPreviewModal] = useState(false)
   const [confidentialData, setConfidentialData] = useState([])
+  const [nda, setNda] = useState({})
   // const [activeIndex, setActiveIndex] = useState(0)
   const [userData, setUserData] = useState({
     name: '',
@@ -70,10 +71,24 @@ const App = () => {
       setDisplayData(true)
       fetchDataFromAPI()
     } else {
-      performingModalOps(true)
-      setDisplayData(false)
+      callApiForNDAContent()
     }
   }, [])
+
+  const callApiForNDAContent = () => {
+    axios.get(`https://devsidecms.ptw.com/art/?rest_route=/wl/v1/en/side-pages/nda`)
+    .then((res) => {
+      if(res.status === 200){
+        setNda(res.data.nda)
+        performingModalOps(true)
+      setDisplayData(false)
+      }
+      console.log(res)
+    })
+    .catch((err) => {
+      console.log(err)
+    })
+  }
 
   // useEffect(() => {
   //   const handleKeyUp = (event) => {
@@ -278,8 +293,12 @@ const App = () => {
 
             )) : null}
           </div>
+          <div style={{textAlign:'center'}}>
+            <button onClick={(e) => navigate('/portfolio/pdflist')} className='next-button'>See More Portfolio</button>
+          </div>
         </div>
       ) : null}
+
       {modal ? (
         <div
           id="openModal-about"
@@ -305,6 +324,9 @@ const App = () => {
             <h2>Agree to an NDA</h2>
             <div className="nda_content">
               <p className="p">
+                {nda.art_nda_content}
+              </p>
+              {/* <p className="p">
                 Lorem Ipsum is simply dummy text of the printing and typesetting
                 industry. Lorem Ipsum has been the industry's standard dummy
                 text ever since the 1500s, when an unknown printer took a galley
@@ -327,19 +349,7 @@ const App = () => {
                 containing Lorem Ipsum passages, and more recently with desktop
                 publishing software like Aldus PageMaker including versions of
                 Lorem Ipsum.
-              </p>
-              <p className="p">
-                Lorem Ipsum is simply dummy text of the printing and typesetting
-                industry. Lorem Ipsum has been the industry's standard dummy
-                text ever since the 1500s, when an unknown printer took a galley
-                of type and scrambled it to make a type specimen book. It has
-                survived not only five centuries, but also the leap into
-                electronic typesetting, remaining essentially unchanged. It was
-                popularised in the 1960s with the release of Letraset sheets
-                containing Lorem Ipsum passages, and more recently with desktop
-                publishing software like Aldus PageMaker including versions of
-                Lorem Ipsum.
-              </p>
+              </p> */}
             </div>
             <div className="user_details">
               <div className="row">
@@ -367,11 +377,11 @@ const App = () => {
             </div>
             <div className="text-center">
               <button
-                className="portfolio-btn"
+                className={disabled ? "portfolio-btn-disabled" : "portfolio-btn"}
                 onClick={(e) => callApiForSubbmittingData(e)}
                 disabled={disabled}
               >
-                Submit
+                {nda.art_i_agree}
               </button>
               &nbsp;&nbsp;&nbsp;
               {/* <button

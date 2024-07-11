@@ -4,6 +4,7 @@ import ReactDOM from 'react-dom/client';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { Route, BrowserRouter as Router, Routes } from 'react-router-dom'
+import Portfolio from './Portfolio/Portfolio';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
@@ -11,6 +12,7 @@ root.render(
     <Router>
       <Routes>
         <Route path='/portfolio' exact element={<App />} />
+        <Route path='/portfolio/pdflist' exact element={<Portfolio />} />
       </Routes>
     </Router>
   </React.StrictMode>
